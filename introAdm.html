@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa Conceptual: Administración (Koontz - Unidad 1)</title>
+    <!-- Carga de Mermaid.js para renderizar el diagrama de red -->
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --border-color: #0f172a;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: #0f172a;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            color: #475569;
+            font-size: 1rem;
+        }
+
+        .map-wrapper {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 30px;
+            overflow-x: auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Estilos visuales para imitar el diagrama analítico de referencia */
+        .mermaid .node rect, 
+        .mermaid .node polygon {
+            fill: #ffffff !important;
+            stroke: #000000 !important;
+            stroke-width: 1.5px !important;
+        }
+
+        .mermaid .node label {
+            color: #000000 !important;
+            font-size: 13px !important;
+            font-weight: 500;
+        }
+
+        .mermaid .edgeLabel {
+            background-color: #ffffff !important;
+            color: #1e293b !important;
+            font-size: 11px !important;
+            padding: 2px 4px !important;
+            font-style: italic;
+        }
+
+        .mermaid .edgePath path {
+            stroke: #000000 !important;
+            stroke-width: 1.2px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Mapa Conceptual Proposicional</h1>
+        <p>Unidad 1: Administración: Ciencia, Teoría y Práctica (Harold Koontz)</p>
+    </div>
+
+    <div class="map-wrapper">
+        <pre class="mermaid">
+        graph TD
+            %% Nodo Principal
+            A[El Conocimiento Administrativo] -->|se define como| B[Proceso de diseñar y mantener un entorno]
+            A -->|se estructura en| C[5 Funciones Gerenciales]
+            A -->|busca como meta| D[Crear un Superávit]
+            A -->|se fundamenta como| E[Ciencia y Arte]
+            A -->|ha evolucionado mediante| F[Pensamiento Administrativo]
+            A -->|opera dentro de| G[Un Sistema Abierto]
+
+            %% Rama Definición y Eficiencia
+            B -->|para alcanzar| B1[Objetivos grupales]
+            B1 -->|exige la evaluación de| B2[Productividad]
+            B2 -->|que requiere ser| B3[Eficaz: alcanzar metas]
+            B2 -->|que requiere ser| B4[Eficiente: mínimo de recursos]
+
+            %% Rama Funciones Gerenciales
+            C -->|integra| C1[Planeación]
+            C -->|integra| C2[Organización]
+            C -->|integra| C3[Integración de personal]
+            C -->|integra| C4[Dirección]
+            C -->|integra| C5[Control]
+
+            %% Rama Meta
+            D -->|en empresas lucrativas es| D1[Generar utilidades]
+            D -->|en no lucrativas es| D2[Satisfacer necesidades y servicios]
+
+            %% Rama Ciencia y Arte
+            E -->|en su práctica es| E1[Arte: saber hacer contextual]
+            E -->|en su cuerpo de conocimiento es| E2[Ciencia: conocimiento organizado]
+
+            %% Rama Evolución e Historia
+            F -->|inicia formalmente con| F1[Admón. Científica: Taylor]
+            F -->|se sistematiza con| F2[Teoría Operacional: Fayol]
+            F -->|se expande en la| F3[Selva de Enfoques Gerenciales]
+            F3 -->|incluye el marco de| F4[Las 7-S de McKinsey]
+
+            %% Rama Sistema Abierto
+            G -->|recibe del entorno| G1[Insumos y reclamos de solicitantes]
+            G1 -->|se procesan mediante| G2[Proceso de Transformación Gerencial]
+            G2 -->|genera hacia afuera| G3[Productos, servicios y satisfacción]
+            G -->|está condicionado por| G4[Variables externas: económicas, tecnológicas y sociales]
+        </pre>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            flowchart: {
+                curve: 'linear',
+                useMaxWidth: true
+            }
+        });
+    </script>
+</body>
+</html>
