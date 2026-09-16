@@ -1,39 +1,515 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alberto Ramirez Huaman</title>
-    <link rel="stylesheet" href="styles.css"> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alberto Ramirez Huaman | Finance Leader & FP&A Expert</title>
+  <meta name="description" content="Finance leader with 10+ years of FP&A, strategic modeling, and corporate finance experience. Directing $50M+ budgets, driving cost optimizations, and delivering C-suite insights.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+          colors: {
+            primary: { 50: '#eff6ff', 100: '#dbeafe', 200: '#bfdbfe', 300: '#93c5fd', 400: '#60a5fa', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 800: '#1e40af', 900: '#1e3a8a' },
+            accent: { 500: '#0ea5e9', 600: '#0284c7' }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    .lang-hidden { display: none !important; }
+    .timeline-dot::before {
+      content: '';
+      position: absolute;
+      left: -1.65rem;
+      top: 0.35rem;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 9999px;
+      background: #2563eb;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px #2563eb;
+    }
+    @media (max-width: 768px) {
+      .timeline-dot::before { left: -1.4rem; }
+    }
+  </style>
 </head>
-<body>
-    <header>
-        <div class="header-container">
-            <h1>Alberto Ramirez Huaman</h1>
-            <h2>Finance Data & Analytics</h2>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+      <a href="#home" class="flex items-center gap-3">
+        <img src="alberto_photo.png" alt="Alberto Ramirez" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary-500">
+        <div>
+          <span class="font-bold text-slate-900 text-sm sm:text-base" data-en>Alberto Ramirez Huaman</span>
+          <span class="font-bold text-slate-900 text-sm sm:text-base lang-hidden" data-es>Alberto Ramirez Huaman</span>
+          <p class="text-xs text-slate-500 hidden sm:block" data-en>Finance Leader · FP&A Expert</p>
+          <p class="text-xs text-slate-500 hidden sm:block lang-hidden" data-es>Líder Financiero · Experto FP&A</p>
         </div>
-    </header>
-    <main>
-        <div class="container">
-            <section class="about-me">
-                <h2>About Me</h2>
-                <p>Profesional with experience in Project Management, Finance Data Analyst and Software Programming</p>
-            </section>
-            <section class="work-experience">
-                <h2>Experience</h2>
-                <ul>
-                    <li>
-                        <h3>Huawei Technologies</h3>
-                        <p>Finance Project Manager - Data & Analytics</p>
-                        <p>Achievements:</p>
-                        <ul>
-                            <li>Planned the strategy for 2023 in order to guarantee the improvement of financial KPIs by 30%</li>
-                            <li>Business plan creation for a programs with more than 100MUSD, successful execution and resulted in the highest record of financial KPIs</li>
-                        </ul>
-                    </li>
-                </ul>
-            </section>
+      </a>
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+        <a href="#about" class="hover:text-primary-600 transition" data-en>About</a>
+        <a href="#about" class="hover:text-primary-600 transition lang-hidden" data-es>Acerca de</a>
+        <a href="#experience" class="hover:text-primary-600 transition" data-en>Experience</a>
+        <a href="#experience" class="hover:text-primary-600 transition lang-hidden" data-es>Experiencia</a>
+        <a href="#skills" class="hover:text-primary-600 transition" data-en>Skills</a>
+        <a href="#skills" class="hover:text-primary-600 transition lang-hidden" data-es>Habilidades</a>
+        <a href="#education" class="hover:text-primary-600 transition" data-en>Education</a>
+        <a href="#education" class="hover:text-primary-600 transition lang-hidden" data-es>Educación</a>
+        <a href="#articles" class="hover:text-primary-600 transition" data-en>Articles</a>
+        <a href="#articles" class="hover:text-primary-600 transition lang-hidden" data-es>Artículos</a>
+        <a href="#contact" class="hover:text-primary-600 transition" data-en>Contact</a>
+        <a href="#contact" class="hover:text-primary-600 transition lang-hidden" data-es>Contacto</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <button id="langToggle" class="px-3 py-1.5 rounded-full text-sm font-semibold bg-primary-50 text-primary-700 hover:bg-primary-100 transition border border-primary-200">
+          <span data-en>ES</span>
+          <span class="lang-hidden" data-es>EN</span>
+        </button>
+        <a href="mailto:alramirez24@gmail.com" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-600 text-white text-sm font-medium hover:bg-primary-700 transition shadow-sm">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <span data-en>Email Me</span>
+          <span class="lang-hidden" data-es>Escríbeme</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="bg-gradient-to-br from-slate-900 via-primary-900 to-slate-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+      <div class="flex flex-col md:flex-row items-center gap-10 md:gap-16">
+        <div class="flex-shrink-0">
+          <img src="alberto_photo.png" alt="Alberto Ramirez Huaman" class="w-40 h-40 sm:w-48 sm:h-48 rounded-2xl object-cover ring-4 ring-white/20 shadow-2xl">
         </div>
-    </main>
+        <div class="text-center md:text-left">
+          <p class="text-primary-300 font-medium tracking-wide text-sm uppercase mb-2" data-en>Finance Executive · CFA Level I Candidate</p>
+          <p class="text-primary-300 font-medium tracking-wide text-sm uppercase mb-2 lang-hidden" data-es>Ejecutivo Financiero · Candidato CFA Nivel I</p>
+          <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+            Alberto Ramirez Huaman
+          </h1>
+          <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mb-6 leading-relaxed" data-en>
+            Finance leader with 10+ years of FP&A, strategic modeling, and corporate finance experience across telecom, technology, and banking. Proven track record directing $50M+ budgets, driving $4M+ in cost optimizations, and delivering long-range planning insights to C-suite leadership.
+          </p>
+          <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mb-6 leading-relaxed lang-hidden" data-es>
+            Líder financiero con más de 10 años de experiencia en FP&A, modelado estratégico y finanzas corporativas en telecomunicaciones, tecnología y banca. Trayectoria comprobada dirigiendo presupuestos de más de $50M, impulsando optimizaciones de costos de más de $4M y entregando insights de planificación a largo plazo a la alta dirección.
+          </p>
+          <div class="flex flex-wrap justify-center md:justify-start gap-3 text-sm">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur">
+              <svg class="w-4 h-4 text-primary-300" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+              Santo Domingo, Dominican Republic
+            </span>
+            <a href="mailto:alramirez24@gmail.com" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur hover:bg-white/20 transition">
+              alramirez24@gmail.com
+            </a>
+            <a href="tel:+18099625040" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur hover:bg-white/20 transition">
+              +1-809-962-5040
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About / Highlights -->
+  <section id="about" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2" data-en>Professional Highlights</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 lang-hidden" data-es>Destacados Profesionales</h2>
+      <p class="text-slate-500 mb-10 max-w-2xl" data-en>Key achievements that demonstrate strategic impact and operational excellence.</p>
+      <p class="text-slate-500 mb-10 max-w-2xl lang-hidden" data-es>Logros clave que demuestran impacto estratégico y excelencia operativa.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-md transition">
+          <div class="text-3xl font-extrabold text-primary-600 mb-1">$50M+</div>
+          <p class="text-sm font-medium text-slate-700" data-en>Annual Budgets Directed</p>
+          <p class="text-sm font-medium text-slate-700 lang-hidden" data-es>Presupuestos Anuales Dirigidos</p>
+        </div>
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-md transition">
+          <div class="text-3xl font-extrabold text-primary-600 mb-1">$4M+</div>
+          <p class="text-sm font-medium text-slate-700" data-en>Annual Cost Optimizations</p>
+          <p class="text-sm font-medium text-slate-700 lang-hidden" data-es>Optimizaciones de Costos Anuales</p>
+        </div>
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-md transition">
+          <div class="text-3xl font-extrabold text-primary-600 mb-1">$100M+</div>
+          <p class="text-sm font-medium text-slate-700" data-en>Regional Portfolio Controlled</p>
+          <p class="text-sm font-medium text-slate-700 lang-hidden" data-es>Portafolio Regional Controlado</p>
+        </div>
+        <div class="bg-slate-50 rounded-2xl p-6 border border-slate-100 hover:shadow-md transition">
+          <div class="text-3xl font-extrabold text-primary-600 mb-1">15%</div>
+          <p class="text-sm font-medium text-slate-700" data-en>Forecast Accuracy Improvement</p>
+          <p class="text-sm font-medium text-slate-700 lang-hidden" data-es>Mejora en Precisión de Pronósticos</p>
+        </div>
+      </div>
+      <div class="mt-10 p-6 bg-primary-50 rounded-2xl border border-primary-100">
+        <p class="text-slate-700 leading-relaxed" data-en>
+          Expertise in commercial and channel P&L management, cross-border tax governance, supply chain financial control, and capital allocation to accelerate profitable growth. Currently CFA Level I Candidate with strong command of financial modeling, ROI/NPV analysis, and executive reporting.
+        </p>
+        <p class="text-slate-700 leading-relaxed lang-hidden" data-es>
+          Experiencia en gestión de P&L comercial y de canales, gobernanza fiscal transfronteriza, control financiero de la cadena de suministro y asignación de capital para acelerar el crecimiento rentable. Actualmente Candidato CFA Nivel I con sólido dominio de modelado financiero, análisis ROI/NPV y reportes ejecutivos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Experience -->
+  <section id="experience" class="py-16 sm:py-20 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2" data-en>Professional Experience</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 lang-hidden" data-es>Experiencia Profesional</h2>
+      <p class="text-slate-500 mb-12" data-en>Progressive leadership roles delivering measurable financial impact.</p>
+      <p class="text-slate-500 mb-12 lang-hidden" data-es>Roles de liderazgo progresivo que entregan impacto financiero medible.</p>
+
+      <div class="space-y-12 relative border-l-2 border-primary-200 ml-3 sm:ml-4 pl-8">
+
+        <!-- Current Role -->
+        <div class="relative timeline-dot">
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">Commercial Finance Manager | FP&A Manager</h3>
+              <p class="text-primary-600 font-medium">Huawei Technologies – Caribbean & Central America Region</p>
+            </div>
+            <span class="text-sm text-slate-500 font-medium whitespace-nowrap">September 2020 – Present</span>
+          </div>
+          <ul class="space-y-2 text-slate-600 text-sm leading-relaxed list-disc list-outside ml-4">
+            <li data-en>Directed multi-jurisdictional financial operations, cross-border tax governance, and currency risk management across international entities to safeguard margins.</li>
+            <li class="lang-hidden" data-es>Dirigió operaciones financieras multi-jurisdiccionales, gobernanza fiscal transfronteriza y gestión de riesgo cambiario en entidades internacionales para salvaguardar márgenes.</li>
+            <li data-en>Built integrated financial models (P&L, cash flow, scenarios) supporting $50M+ portfolio decisions and improving forecast accuracy by 15%.</li>
+            <li class="lang-hidden" data-es>Construyó modelos financieros integrados (P&L, flujo de caja, escenarios) que apoyaron decisiones de portafolio de más de $50M y mejoraron la precisión de pronósticos en un 15%.</li>
+            <li data-en>Led the end-to-end FP&A cycle including $50M+ annual budgets, quarterly forecasts, variance analysis, and executive reporting to CFO and senior leadership.</li>
+            <li class="lang-hidden" data-es>Lideró el ciclo completo de FP&A incluyendo presupuestos anuales de más de $50M, pronósticos trimestrales, análisis de variaciones y reportes ejecutivos al CFO y alta dirección.</li>
+            <li data-en>Engineered channel P&L and SKU profitability models enabling strategic pricing that boosted gross margin +1.1%. Performed make-vs-buy and TCO analysis that boosted gross margin 0.8%.</li>
+            <li class="lang-hidden" data-es>Diseñó modelos de P&L de canales y rentabilidad por SKU que permitieron precios estratégicos aumentando el margen bruto en +1.1%. Realizó análisis make-vs-buy y TCO que aumentaron el margen bruto en 0.8%.</li>
+            <li data-en>Strengthened financial governance and internal controls across business units.</li>
+            <li class="lang-hidden" data-es>Fortaleció la gobernanza financiera y los controles internos en las unidades de negocio.</li>
+          </ul>
+        </div>
+
+        <!-- Previous Role -->
+        <div class="relative timeline-dot">
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">Senior Project Finance Controller | Regional Investment Analyst</h3>
+              <p class="text-primary-600 font-medium">Huawei Technologies – Caribbean & Central America Region</p>
+            </div>
+            <span class="text-sm text-slate-500 font-medium whitespace-nowrap">July 2016 – August 2020</span>
+          </div>
+          <ul class="space-y-2 text-slate-600 text-sm leading-relaxed list-disc list-outside ml-4">
+            <li data-en>Led financial control for $100M+ regional portfolio, managing revenue, AR, and working capital.</li>
+            <li class="lang-hidden" data-es>Lideró el control financiero de un portafolio regional de más de $100M, gestionando ingresos, cuentas por cobrar y capital de trabajo.</li>
+            <li data-en>Performed ROI/NPV analysis for new business and financing projects; customer credit analysis to set ratings, payment terms, and credit limits.</li>
+            <li class="lang-hidden" data-es>Realizó análisis ROI/NPV para nuevos negocios y proyectos de financiamiento; análisis de crédito de clientes para establecer ratings, términos de pago y límites de crédito.</li>
+            <li data-en>Drove cost optimization initiatives saving $4M annually. Owned unit cost and standard costing models; performed price, yield, and efficiency variance analyses.</li>
+            <li class="lang-hidden" data-es>Impulsó iniciativas de optimización de costos ahorrando $4M anualmente. Gestionó modelos de costo unitario y costeo estándar; realizó análisis de variaciones de precio, rendimiento y eficiencia.</li>
+            <li data-en>Established intercompany transfer pricing with tax advisors for hardware and software rollouts, safeguarding gross margins across cross-border operations.</li>
+            <li class="lang-hidden" data-es>Estableció precios de transferencia intercompañía con asesores fiscales para despliegues de hardware y software, salvaguardando márgenes brutos en operaciones transfronterizas.</li>
+          </ul>
+        </div>
+
+        <!-- Finance Project Manager -->
+        <div class="relative timeline-dot">
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">Finance Project Manager</h3>
+              <p class="text-primary-600 font-medium">Huawei Technologies</p>
+            </div>
+            <span class="text-sm text-slate-500 font-medium whitespace-nowrap">November 2014 – July 2016</span>
+          </div>
+          <ul class="space-y-2 text-slate-600 text-sm leading-relaxed list-disc list-outside ml-4">
+            <li data-en>Owned performance of telecom software projects, managing budgets, costs, timelines, and margins.</li>
+            <li class="lang-hidden" data-es>Fue responsable del desempeño de proyectos de software de telecomunicaciones, gestionando presupuestos, costos, plazos y márgenes.</li>
+            <li data-en>Led 15+ cross-functional engineers, optimizing resource allocation. Built budgets and forecasts; tracked actuals vs. plan to protect profitability targets.</li>
+            <li class="lang-hidden" data-es>Lideró a más de 15 ingenieros multifuncionales, optimizando la asignación de recursos. Construyó presupuestos y pronósticos; rastreó reales vs. plan para proteger objetivos de rentabilidad.</li>
+            <li data-en>Negotiated vendor contracts, supported pricing and business cases, and improved cost efficiency for key client accounts.</li>
+            <li class="lang-hidden" data-es>Negoció contratos con proveedores, apoyó precios y casos de negocio, y mejoró la eficiencia de costos para cuentas clave de clientes.</li>
+          </ul>
+        </div>
+
+        <!-- Earlier -->
+        <div class="relative timeline-dot">
+          <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1 mb-3">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900" data-en>Earlier Experience</h3>
+              <h3 class="text-lg font-bold text-slate-900 lang-hidden" data-es>Experiencia Anterior</h3>
+            </div>
+          </div>
+          <ul class="space-y-2 text-slate-600 text-sm leading-relaxed list-disc list-outside ml-4">
+            <li data-en>Collections Systems Analyst – Altice Dominicana (2012–2014)</li>
+            <li class="lang-hidden" data-es>Analista de Sistemas de Cobros – Altice Dominicana (2012–2014)</li>
+            <li data-en>Finance Project Leader – Banco Vimenca (2011–2012)</li>
+            <li class="lang-hidden" data-es>Líder de Proyectos Financieros – Banco Vimenca (2011–2012)</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2" data-en>Core Competencies</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 lang-hidden" data-es>Competencias Principales</h2>
+      <p class="text-slate-500 mb-10" data-en>Technical and leadership capabilities that drive results.</p>
+      <p class="text-slate-500 mb-10 lang-hidden" data-es>Capacidades técnicas y de liderazgo que impulsan resultados.</p>
+      <div class="flex flex-wrap gap-3">
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">FP&A</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Financial Modeling</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Budgeting & Forecasting</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Investment Analysis</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">ROI / NPV / IRR</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Cash Flow Management</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Variance Analysis</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Business Partnering</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Executive Reporting</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Power BI</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Advanced Excel</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">SQL</span>
+        <span class="px-4 py-2 rounded-full bg-primary-50 text-primary-800 text-sm font-medium border border-primary-100">Python</span>
+        <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium border border-slate-200" data-en>Cross-border Tax Governance</span>
+        <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium border border-slate-200 lang-hidden" data-es>Gobernanza Fiscal Transfronteriza</span>
+        <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium border border-slate-200" data-en>Channel P&L Management</span>
+        <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium border border-slate-200 lang-hidden" data-es>Gestión de P&L de Canales</span>
+        <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium border border-slate-200" data-en>Supply Chain Finance</span>
+        <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium border border-slate-200 lang-hidden" data-es>Finanzas de Cadena de Suministro</span>
+        <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium border border-slate-200" data-en>Capital Allocation</span>
+        <span class="px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium border border-slate-200 lang-hidden" data-es>Asignación de Capital</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Education & Certs -->
+  <section id="education" class="py-16 sm:py-20 bg-slate-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <div class="grid md:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-6" data-en>Education</h2>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 lang-hidden" data-es>Educación</h2>
+          <div class="space-y-5">
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+              <h3 class="font-bold text-slate-900">MBA, Project Management</h3>
+              <p class="text-primary-600 text-sm">Pontificia Universidad Madre y Maestra</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+              <h3 class="font-bold text-slate-900" data-en>Accounting</h3>
+              <h3 class="font-bold text-slate-900 lang-hidden" data-es>Contabilidad</h3>
+              <p class="text-primary-600 text-sm">Universidad Central del Este</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+              <h3 class="font-bold text-slate-900">B.S. Engineering</h3>
+              <p class="text-primary-600 text-sm">Pontificia Universidad Madre y Maestra</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-6" data-en>Certifications & Development</h2>
+          <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 lang-hidden" data-es>Certificaciones y Desarrollo</h2>
+          <div class="space-y-5">
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+              <h3 class="font-bold text-slate-900">CFA Program – Level I Candidate</h3>
+              <p class="text-primary-600 text-sm">CFA Institute</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+              <h3 class="font-bold text-slate-900" data-en>Financial Modeling Course</h3>
+              <h3 class="font-bold text-slate-900 lang-hidden" data-es>Curso de Modelado Financiero</h3>
+              <p class="text-primary-600 text-sm">CFA Institute</p>
+            </div>
+            <div class="bg-white rounded-xl p-5 border border-slate-100 shadow-sm">
+              <h3 class="font-bold text-slate-900" data-en>Certified Tax Consultant</h3>
+              <h3 class="font-bold text-slate-900 lang-hidden" data-es>Consultor Fiscal Certificado</h3>
+              <p class="text-primary-600 text-sm">Dominicana Tax Association</p>
+            </div>
+          </div>
+          <div class="mt-8">
+            <h3 class="font-semibold text-slate-900 mb-3" data-en>Languages</h3>
+            <h3 class="font-semibold text-slate-900 mb-3 lang-hidden" data-es>Idiomas</h3>
+            <div class="flex gap-4">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                <span class="text-sm" data-en>English – Fluent</span>
+                <span class="text-sm lang-hidden" data-es>Inglés – Fluido</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-green-500"></span>
+                <span class="text-sm" data-en>Spanish – Native</span>
+                <span class="text-sm lang-hidden" data-es>Español – Nativo</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Articles Section -->
+  <section id="articles" class="py-16 sm:py-20 bg-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2" data-en>Articles & Insights</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 lang-hidden" data-es>Artículos e Insights</h2>
+      <p class="text-slate-500 mb-8" data-en>Thought leadership and resources. This section automatically lists HTML files available in the same directory.</p>
+      <p class="text-slate-500 mb-8 lang-hidden" data-es>Liderazgo de pensamiento y recursos. Esta sección lista automáticamente los archivos HTML disponibles en el mismo directorio.</p>
+      
+      <div id="articlesList" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Populated by JS -->
+      </div>
+      <p id="noArticles" class="text-slate-400 text-sm italic hidden" data-en>No additional HTML articles found in this directory yet. Add .html files alongside this page to see them listed here.</p>
+      <p id="noArticlesEs" class="text-slate-400 text-sm italic hidden lang-hidden" data-es>Aún no se encontraron artículos HTML adicionales en este directorio. Agrega archivos .html junto a esta página para verlos listados aquí.</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 sm:py-20 bg-gradient-to-br from-primary-900 to-slate-900 text-white">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-en>Let's Connect</h2>
+      <h2 class="text-2xl sm:text-3xl font-bold mb-4 lang-hidden" data-es>Conectemos</h2>
+      <p class="text-slate-300 max-w-xl mx-auto mb-8" data-en>Open to executive opportunities, strategic advisory, and conversations about finance leadership in telecom, technology, and beyond.</p>
+      <p class="text-slate-300 max-w-xl mx-auto mb-8 lang-hidden" data-es>Abierto a oportunidades ejecutivas, asesoría estratégica y conversaciones sobre liderazgo financiero en telecomunicaciones, tecnología y más allá.</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="mailto:alramirez24@gmail.com" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-primary-800 font-semibold hover:bg-primary-50 transition shadow-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          alramirez24@gmail.com
+        </a>
+        <a href="tel:+18099625040" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary-700/50 border border-primary-500/50 text-white font-semibold hover:bg-primary-600/50 transition">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+          +1-809-962-5040
+        </a>
+      </div>
+      <p class="mt-8 text-sm text-slate-400">Santo Domingo, Dominican Republic</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 text-slate-500 py-6 text-center text-sm">
+    <p data-en>© 2026 Alberto Ramirez Huaman. All rights reserved.</p>
+    <p class="lang-hidden" data-es>© 2026 Alberto Ramirez Huaman. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    // Language Toggle
+    let currentLang = 'en';
+    const toggleBtn = document.getElementById('langToggle');
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.querySelectorAll('[data-en]').forEach(el => {
+        if (lang === 'en') {
+          el.classList.remove('lang-hidden');
+        } else {
+          el.classList.add('lang-hidden');
+        }
+      });
+      document.querySelectorAll('[data-es]').forEach(el => {
+        if (lang === 'es') {
+          el.classList.remove('lang-hidden');
+        } else {
+          el.classList.add('lang-hidden');
+        }
+      });
+      document.documentElement.lang = lang;
+      // Update no-articles visibility based on lang
+      updateArticlesMessage();
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      setLanguage(currentLang === 'en' ? 'es' : 'en');
+    });
+
+    // Articles discovery
+    // Since browsers cannot list directory contents for security reasons,
+    // we maintain a list here. Add any additional .html files (except this index.html)
+    // to the array below. The page will render cards linking to them.
+    // Optionally, you can host this on a server that provides directory listing
+    // or add a simple articles.json for fully dynamic discovery.
+
+    const knownArticles = [
+      // Example entries – replace/add your own HTML files:
+      // { file: 'fp-a-best-practices.html', title: 'FP&A Best Practices for Growth', titleEs: 'Mejores Prácticas de FP&A para el Crecimiento', desc: 'Key frameworks for accurate forecasting.', descEs: 'Marcos clave para pronósticos precisos.' },
+      // { file: 'cross-border-tax.html', title: 'Cross-Border Tax Governance', titleEs: 'Gobernanza Fiscal Transfronteriza', desc: 'Insights from multi-jurisdictional operations.', descEs: 'Insights de operaciones multi-jurisdiccionales.' }
+    ];
+
+    // Attempt to discover by trying common patterns or a manifest if present
+    async function loadArticles() {
+      const listEl = document.getElementById('articlesList');
+      const noArticles = document.getElementById('noArticles');
+      const noArticlesEs = document.getElementById('noArticlesEs');
+
+      let articles = [...knownArticles];
+
+      // Try to fetch a optional manifest.json for dynamic list
+      try {
+        const res = await fetch('articles.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            articles = data;
+          }
+        }
+      } catch (e) {
+        // No manifest – fall back to knownArticles
+      }
+
+      // Filter out the current page itself
+      articles = articles.filter(a => a.file && !a.file.includes('index.html'));
+
+      if (articles.length === 0) {
+        noArticles.classList.remove('hidden');
+        noArticlesEs.classList.add('hidden');
+        updateArticlesMessage();
+        return;
+      }
+
+      noArticles.classList.add('hidden');
+      noArticlesEs.classList.add('hidden');
+
+      listEl.innerHTML = articles.map(a => `
+        <a href="${a.file}" class="block group bg-slate-50 hover:bg-primary-50 rounded-xl p-5 border border-slate-100 hover:border-primary-200 transition shadow-sm hover:shadow">
+          <h3 class="font-semibold text-slate-900 group-hover:text-primary-700 mb-1">
+            <span data-en>${a.title || a.file}</span>
+            <span class="lang-hidden" data-es>${a.titleEs || a.title || a.file}</span>
+          </h3>
+          <p class="text-sm text-slate-500 line-clamp-2">
+            <span data-en>${a.desc || ''}</span>
+            <span class="lang-hidden" data-es>${a.descEs || a.desc || ''}</span>
+          </p>
+          <span class="inline-flex items-center gap-1 mt-3 text-xs font-medium text-primary-600">
+            <span data-en>Read article</span>
+            <span class="lang-hidden" data-es>Leer artículo</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </a>
+      `).join('');
+
+      // Re-apply language after injecting
+      setLanguage(currentLang);
+    }
+
+    function updateArticlesMessage() {
+      const noArticles = document.getElementById('noArticles');
+      const noArticlesEs = document.getElementById('noArticlesEs');
+      if (currentLang === 'en') {
+        noArticles.classList.remove('hidden');
+        noArticlesEs.classList.add('hidden');
+      } else {
+        noArticles.classList.add('hidden');
+        noArticlesEs.classList.remove('hidden');
+      }
+      // Only show if list is empty
+      if (document.getElementById('articlesList').children.length > 0) {
+        noArticles.classList.add('hidden');
+        noArticlesEs.classList.add('hidden');
+      }
+    }
+
+    // Initialize
+    loadArticles();
+  </script>
 </body>
 </html>
