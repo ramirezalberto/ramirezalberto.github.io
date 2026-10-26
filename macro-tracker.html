@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Macro Tracker Pro</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --card: #1a1d27;
+      --card2: #222632;
+      --border: #2d3344;
+      --text: #e8eaed;
+      --muted: #9aa0b0;
+      --primary: #6c5ce7;
+      --primary-hover: #5a4bd1;
+      --success: #00b894;
+      --warning: #fdcb6e;
+      --danger: #e17055;
+      --protein: #6c5ce7;
+      --carbs: #00cec9;
+      --fat: #fdcb6e;
+      --calories: #e17055;
+      --radius: 16px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    header {
+      text-align: center;
+      padding: 24px 0 16px;
+    }
+
+    header h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #6c5ce7, #00cec9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    header p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 4px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .card h2 {
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card h2 span { font-size: 1.3rem; }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    input, select, button, textarea {
+      font-family: inherit;
+      font-size: 1rem;
+    }
+
+    input[type="number"], input[type="text"], select, textarea {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      width: 100%;
+    }
+
+    .btn:hover { background: var(--primary-hover); }
+    .btn:active { transform: scale(0.98); }
+
+    .btn-secondary {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-secondary:hover { background: var(--border); }
+
+    .btn-sm {
+      padding: 8px 12px;
+      font-size: 0.85rem;
+      width: auto;
+    }
+
+    .btn-danger {
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger);
+    }
+
+    .goal-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .goal-btn {
+      background: var(--card2);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 14px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .goal-btn.active {
+      border-color: var(--primary);
+      background: rgba(108, 92, 231, 0.15);
+      color: #a29bfe;
+    }
+
+    .goal-btn small {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    /* Progress */
+    .macro-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .macro-box {
+      background: var(--card2);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .macro-box .value {
+      font-size: 1.4rem;
+      font-weight: 700;
+    }
+
+    .macro-box .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .macro-box .target {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+
+    .calories .progress-fill { background: var(--calories); }
+    .protein .progress-fill { background: var(--protein); }
+    .carbs .progress-fill { background: var(--carbs); }
+    .fat .progress-fill { background: var(--fat); }
+
+    /* Food list */
+    .food-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .food-item:last-child { border-bottom: none; }
+
+    .food-info h4 {
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+
+    .food-info span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .food-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .food-cals {
+      font-weight: 600;
+      font-size: 0.95rem;
+      min-width: 50px;
+      text-align: right;
+    }
+
+    /* Suggestions */
+    .suggestion {
+      background: linear-gradient(135deg, rgba(108,92,231,0.15), rgba(0,206,201,0.1));
+      border: 1px solid rgba(108,92,231,0.3);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .suggestion h3 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .suggestion p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .tab {
+      flex-shrink: 0;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .hidden { display: none !important; }
+
+    .empty-state {
+      text-align: center;
+      padding: 30px 10px;
+      color: var(--muted);
+    }
+
+    .empty-state span { font-size: 2.5rem; display: block; margin-bottom: 10px; }
+
+    .date-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .date-nav button {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .date-nav .current-date {
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    .form-row {
+      margin-bottom: 14px;
+    }
+
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin: 20px 0 10px;
+    }
+
+    @media (max-width: 400px) {
+      .macro-grid { grid-template-columns: 1fr 1fr; }
+      .goal-options { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Macro Tracker Pro</h1>
+      <p>Track • Optimize • Progress</p>
+    </header>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active" data-tab="dashboard">Dashboard</div>
+      <div class="tab" data-tab="log">Log Food</div>
+      <div class="tab" data-tab="profile">Profile</div>
+      <div class="tab" data-tab="tips">Tips</div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard">
+      <div class="date-nav">
+        <button onclick="changeDate(-1)">‹</button>
+        <div class="current-date" id="currentDateLabel">Today</div>
+        <button onclick="changeDate(1)">›</button>
+      </div>
+
+      <div class="card">
+        <h2><span>📊</span> Today's Progress</h2>
+        <div class="macro-grid">
+          <div class="macro-box calories">
+            <div class="label">Calories</div>
+            <div class="value" id="calCurrent">0</div>
+            <div class="target">/ <span id="calTarget">2000</span></div>
+            <div class="progress-bar"><div class="progress-fill" id="calBar" style="width:0%"></div></div>
+          </div>
+          <div class="macro-box protein">
+            <div class="label">Protein</div>
+            <div class="value" id="proCurrent">0g</div>
+            <div class="target">/ <span id="proTarget">150</span>g</div>
+            <div class="progress-bar"><div class="progress-fill" id="proBar" style="width:0%"></div></div>
+          </div>
+          <div class="macro-box carbs">
+            <div class="label">Carbs</div>
+            <div class="value" id="carbCurrent">0g</div>
+            <div class="target">/ <span id="carbTarget">200</span>g</div>
+            <div class="progress-bar"><div class="progress-fill" id="carbBar" style="width:0%"></div></div>
+          </div>
+          <div class="macro-box fat">
+            <div class="label">Fat</div>
+            <div class="value" id="fatCurrent">0g</div>
+            <div class="target">/ <span id="fatTarget">60</span>g</div>
+            <div class="progress-bar"><div class="progress-fill" id="fatBar" style="width:0%"></div></div>
+          </div>
+        </div>
+
+        <div id="remainingText" style="text-align:center; font-size:0.9rem; color:var(--muted); margin-top:8px;"></div>
+      </div>
+
+      <div class="card">
+        <h2><span>🍽️</span> Today's Foods</h2>
+        <div id="foodList">
+          <div class="empty-state">
+            <span>🥗</span>
+            No foods logged yet.<br>Go to Log Food to add something.
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="quickSuggestions">
+        <h2><span>💡</span> Smart Suggestions</h2>
+        <div id="suggestionsList"></div>
+      </div>
+    </div>
+
+    <!-- LOG FOOD -->
+    <div id="tab-log" class="hidden">
+      <div class="card">
+        <h2><span>➕</span> Add Food</h2>
+        <div class="form-row">
+          <label>Food name</label>
+          <input type="text" id="foodName" placeholder="e.g. Chicken breast, rice, avocado..." />
+        </div>
+        <div class="grid-2">
+          <div class="form-row">
+            <label>Calories</label>
+            <input type="number" id="foodCal" placeholder="0" min="0" />
+          </div>
+          <div class="form-row">
+            <label>Protein (g)</label>
+            <input type="number" id="foodPro" placeholder="0" min="0" step="0.1" />
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-row">
+            <label>Carbs (g)</label>
+            <input type="number" id="foodCarb" placeholder="0" min="0" step="0.1" />
+          </div>
+          <div class="form-row">
+            <label>Fat (g)</label>
+            <input type="number" id="foodFat" placeholder="0" min="0" step="0.1" />
+          </div>
+        </div>
+        <button class="btn" onclick="addFood()">Add to Today</button>
+      </div>
+
+      <div class="card">
+        <h2><span>⚡</span> Quick Add</h2>
+        <div class="grid-2" style="gap:10px;">
+          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Chicken breast 150g', 248, 46, 0, 5.4)">Chicken 150g</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Rice cooked 200g', 260, 5.4, 56, 0.6)">Rice 200g</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Egg (whole)', 72, 6.3, 0.4, 4.8)">Egg</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Greek yogurt 150g', 89, 15, 5.5, 0.6)">Greek Yogurt</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Banana medium', 105, 1.3, 27, 0.4)">Banana</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Avocado 100g', 160, 2, 8.5, 15)">Avocado</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Oats 50g dry', 190, 6.5, 34, 3.5)">Oats 50g</button>
+          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Whey scoop', 120, 24, 3, 1.5)">Whey Scoop</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFILE -->
+    <div id="tab-profile" class="hidden">
+      <div class="card">
+        <h2><span>👤</span> Your Profile</h2>
+        <div class="grid-2">
+          <div class="form-row">
+            <label>Age</label>
+            <input type="number" id="age" min="15" max="100" value="30" />
+          </div>
+          <div class="form-row">
+            <label>Gender</label>
+            <select id="gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="form-row">
+            <label>Weight (kg)</label>
+            <input type="number" id="weight" min="30" max="250" step="0.1" value="75" />
+          </div>
+          <div class="form-row">
+            <label>Height (cm)</label>
+            <input type="number" id="height" min="120" max="230" value="175" />
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Activity Level</label>
+          <select id="activity">
+            <option value="1.2">Sedentary (little/no exercise)</option>
+            <option value="1.375">Lightly active (1–3 days/week)</option>
+            <option value="1.55" selected>Moderately active (3–5 days/week)</option>
+            <option value="1.725">Very active (6–7 days/week)</option>
+            <option value="1.9">Extra active (hard training + job)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span>🎯</span> Your Goal</h2>
+        <div class="goal-options">
+          <div class="goal-btn active" data-goal="fatloss">
+            Fat Loss
+            <small>Deficit + high protein</small>
+          </div>
+          <div class="goal-btn" data-goal="recomp">
+            Fat Loss + Muscle
+            <small>Recomp – near maintenance</small>
+          </div>
+          <div class="goal-btn" data-goal="muscle">
+            Muscle Building
+            <small>Surplus + high protein</small>
+          </div>
+          <div class="goal-btn" data-goal="maintain">
+            Maintenance / Other
+            <small>Stay the same weight</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2><span>📈</span> Calculated Targets</h2>
+        <div style="font-size:0.95rem; line-height:1.7;">
+          <div>BMR: <strong id="bmrValue">—</strong> kcal</div>
+          <div>TDEE (maintenance): <strong id="tdeeValue">—</strong> kcal</div>
+          <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+            Target Calories: <strong id="targetCals">—</strong><br>
+            Protein: <strong id="targetPro">—</strong> g<br>
+            Carbs: <strong id="targetCarb">—</strong> g<br>
+            Fat: <strong id="targetFat">—</strong> g
+          </div>
+        </div>
+        <button class="btn" style="margin-top:16px;" onclick="saveProfile()">Save & Update Targets</button>
+      </div>
+    </div>
+
+    <!-- TIPS -->
+    <div id="tab-tips" class="hidden">
+      <div class="card">
+        <h2><span>📚</span> Goal-Based Tips</h2>
+        <div id="tipsContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ========== STATE ==========
+    let state = {
+      profile: {
+        age: 30,
+        gender: 'male',
+        weight: 75,
+        height: 175,
+        activity: 1.55,
+        goal: 'fatloss'
+      },
+      targets: { cal: 2000, pro: 150, carb: 200, fat: 60 },
+      logs: {},          // dateKey -> [{id, name, cal, pro, carb, fat}]
+      currentDate: new Date()
+    };
+
+    // ========== HELPERS ==========
+    function dateKey(d = state.currentDate) {
+      return d.toISOString().slice(0, 10);
+    }
+
+    function formatDate(d) {
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const check = new Date(d);
+      check.setHours(0,0,0,0);
+      const diff = (check - today) / 86400000;
+      if (diff === 0) return 'Today';
+      if (diff === -1) return 'Yesterday';
+      if (diff === 1) return 'Tomorrow';
+      return d.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
+    }
+
+    function uid() {
+      return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    }
+
+    // ========== CALCULATION ==========
+    function calcBMR() {
+      const { age, gender, weight, height } = state.profile;
+      // Mifflin-St Jeor
+      if (gender === 'male') {
+        return 10 * weight + 6.25 * height - 5 * age + 5;
+      }
+      return 10 * weight + 6.25 * height - 5 * age - 161;
+    }
+
+    function calcTDEE() {
+      return Math.round(calcBMR() * state.profile.activity);
+    }
+
+    function calcTargets() {
+      const tdee = calcTDEE();
+      const w = state.profile.weight;
+      let cal, proGkg, fatPct;
+
+      switch (state.profile.goal) {
+        case 'fatloss':
+          cal = Math.round(tdee - 400);          // ~400 deficit
+          proGkg = 2.2;
+          fatPct = 0.28;
+          break;
+        case 'recomp':
+          cal = Math.round(tdee - 150);          // mild deficit
+          proGkg = 2.3;
+          fatPct = 0.25;
+          break;
+        case 'muscle':
+          cal = Math.round(tdee + 300);          // modest surplus
+          proGkg = 2.0;
+          fatPct = 0.25;
+          break;
+        default: // maintain
+          cal = tdee;
+          proGkg = 1.8;
+          fatPct = 0.28;
+      }
+
+      const pro = Math.round(w * proGkg);
+      const fat = Math.round((cal * fatPct) / 9);
+      const carb = Math.round((cal - (pro * 4) - (fat * 9)) / 4);
+
+      state.targets = { cal, pro, carb, fat };
+      return state.targets;
+    }
+
+    // ========== STORAGE ==========
+    function save() {
+      localStorage.setItem('macroTrackerPro', JSON.stringify({
+        profile: state.profile,
+        logs: state.logs
+      }));
+    }
+
+    function load() {
+      try {
+        const raw = localStorage.getItem('macroTrackerPro');
+        if (raw) {
+          const data = JSON.parse(raw);
+          if (data.profile) state.profile = { ...state.profile, ...data.profile };
+          if (data.logs) state.logs = data.logs;
+        }
+      } catch (e) {}
+    }
+
+    // ========== UI UPDATE ==========
+    function getTodayFoods() {
+      return state.logs[dateKey()] || [];
+    }
+
+    function getTotals() {
+      const foods = getTodayFoods();
+      return foods.reduce((acc, f) => {
+        acc.cal += f.cal || 0;
+        acc.pro += f.pro || 0;
+        acc.carb += f.carb || 0;
+        acc.fat += f.fat || 0;
+        return acc;
+      }, { cal: 0, pro: 0, carb: 0, fat: 0 });
+    }
+
+    function updateDashboard() {
+      const t = getTotals();
+      const targets = state.targets;
+
+      document.getElementById('calCurrent').textContent = Math.round(t.cal);
+      document.getElementById('proCurrent').textContent = Math.round(t.pro) + 'g';
+      document.getElementById('carbCurrent').textContent = Math.round(t.carb) + 'g';
+      document.getElementById('fatCurrent').textContent = Math.round(t.fat) + 'g';
+
+      document.getElementById('calTarget').textContent = targets.cal;
+      document.getElementById('proTarget').textContent = targets.pro;
+      document.getElementById('carbTarget').textContent = targets.carb;
+      document.getElementById('fatTarget').textContent = targets.fat;
+
+      const pct = (val, max) => Math.min(100, Math.round((val / max) * 100));
+      document.getElementById('calBar').style.width = pct(t.cal, targets.cal) + '%';
+      document.getElementById('proBar').style.width = pct(t.pro, targets.pro) + '%';
+      document.getElementById('carbBar').style.width = pct(t.carb, targets.carb) + '%';
+      document.getElementById('fatBar').style.width = pct(t.fat, targets.fat) + '%';
+
+      const remCal = targets.cal - t.cal;
+      const remPro = targets.pro - t.pro;
+      document.getElementById('remainingText').innerHTML =
+        remCal > 0
+          ? `<strong>${Math.round(remCal)}</strong> kcal remaining • <strong>${Math.round(Math.max(0, remPro))}</strong>g protein left`
+          : `<strong style="color:var(--warning)">Over by ${Math.abs(Math.round(remCal))} kcal</strong>`;
+
+      // Food list
+      const list = document.getElementById('foodList');
+      const foods = getTodayFoods();
+      if (foods.length === 0) {
+        list.innerHTML = `<div class="empty-state"><span>🥗</span>No foods logged yet.<br>Go to Log Food to add something.</div>`;
+      } else {
+        list.innerHTML = foods.map(f => `
+          <div class="food-item">
+            <div class="food-info">
+              <h4>${f.name}</h4>
+              <span>P ${Math.round(f.pro)}g • C ${Math.round(f.carb)}g • F ${Math.round(f.fat)}g</span>
+            </div>
+            <div class="food-actions">
+              <div class="food-cals">${Math.round(f.cal)}</div>
+              <button class="btn btn-sm btn-danger" onclick="removeFood('${f.id}')">×</button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      updateSuggestions();
+      document.getElementById('currentDateLabel').textContent = formatDate(state.currentDate);
+    }
+
+    function updateProfileUI() {
+      const p = state.profile;
+      document.getElementById('age').value = p.age;
+      document.getElementById('gender').value = p.gender;
+      document.getElementById('weight').value = p.weight;
+      document.getElementById('height').value = p.height;
+      document.getElementById('activity').value = p.activity;
+
+      document.querySelectorAll('.goal-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.goal === p.goal);
+      });
+
+      const bmr = Math.round(calcBMR());
+      const tdee = calcTDEE();
+      const t = calcTargets();
+
+      document.getElementById('bmrValue').textContent = bmr;
+      document.getElementById('tdeeValue').textContent = tdee;
+      document.getElementById('targetCals').textContent = t.cal + ' kcal';
+      document.getElementById('targetPro').textContent = t.pro;
+      document.getElementById('targetCarb').textContent = t.carb;
+      document.getElementById('targetFat').textContent = t.fat;
+    }
+
+    function updateSuggestions() {
+      const t = getTotals();
+      const targets = state.targets;
+      const goal = state.profile.goal;
+      const remCal = targets.cal - t.cal;
+      const remPro = targets.pro - t.pro;
+      const remCarb = targets.carb - t.carb;
+      const remFat = targets.fat - t.fat;
+
+      let suggestions = [];
+
+      // Protein first priority
+      if (remPro > 25) {
+        suggestions.push({
+          icon: '🥩',
+          title: 'Prioritize Protein',
+          text: `You still need ~${Math.round(remPro)}g protein. Good options: chicken, Greek yogurt, eggs, whey, tuna, or lean beef.`
+        });
+      } else if (remPro > 10) {
+        suggestions.push({
+          icon: '🥛',
+          title: 'Almost at protein target',
+          text: `Only ~${Math.round(remPro)}g protein left. A scoop of whey or a Greek yogurt will close the gap nicely.`
+        });
+      }
+
+      // Calorie situation
+      if (remCal < -150) {
+        suggestions.push({
+          icon: '⚠️',
+          title: 'Over calories',
+          text: `You're ${Math.abs(Math.round(remCal))} kcal over. For the rest of the day focus on high-volume, low-calorie foods (veggies, lean protein) if possible.`
+        });
+      } else if (remCal > 400 && remPro < 20) {
+        suggestions.push({
+          icon: '🍚',
+          title: 'Room for carbs / energy',
+          text: `You have ${Math.round(remCal)} kcal left and protein is mostly covered. Rice, potatoes, fruit or oats are great now.`
+        });
+      }
+
+      // Goal specific
+      if (goal === 'fatloss') {
+        suggestions.push({
+          icon: '🔥',
+          title: 'Fat Loss Mode',
+          text: 'Keep protein high and stay in a moderate deficit. High volume foods (veggies, lean meats, potatoes) help with hunger. Aim for 7k–10k steps + lifting 3–5×/week.'
+        });
+      } else if (goal === 'recomp') {
+        suggestions.push({
+          icon: '⚖️',
+          title: 'Recomp Strategy',
+          text: 'Stay near maintenance or slight deficit. Progressive overload in the gym is more important than aggressive dieting. Protein should be the highest of all goals.'
+        });
+      } else if (goal === 'muscle') {
+        suggestions.push({
+          icon: '💪',
+          title: 'Building Mode',
+          text: 'You need the surplus. Don’t fear carbs — they fuel hard training and recovery. Keep progressive overload and sleep 7–9 hours.'
+        });
+      }
+
+      // Fat check
+      if (remFat < -10) {
+        suggestions.push({
+          icon: '🥑',
+          title: 'Fat a bit high',
+          text: 'Fat is over target. Future meals can lean more toward protein + carbs (chicken + rice, yogurt + fruit) to balance.'
+        });
+      }
+
+      if (suggestions.length === 0) {
+        suggestions.push({
+          icon: '✅',
+          title: 'Looking solid',
+          text: 'Macros are well balanced for the day. Keep it up!'
+        });
+      }
+
+      document.getElementById('suggestionsList').innerHTML = suggestions.map(s => `
+        <div class="suggestion">
+          <h3>${s.icon} ${s.title}</h3>
+          <p>${s.text}</p>
+        </div>
+      `).join('');
+    }
+
+    function updateTips() {
+      const goal = state.profile.goal;
+      const tips = {
+        fatloss: `
+          <div class="suggestion">
+            <h3>🔥 Fat Loss Focus</h3>
+            <p>• Aim for 0.5–1% bodyweight loss per week.<br>
+            • Protein 2.0–2.4 g/kg protects muscle.<br>
+            • Strength train 3–5×/week + daily steps.<br>
+            • Sleep and stress management matter as much as food.</p>
+          </div>
+          <div class="suggestion">
+            <h3>🍽️ Practical tips</h3>
+            <p>• Fill half the plate with vegetables.<br>
+            • Use volume eating (high fiber, high water foods).<br>
+            • Weigh food when possible for accuracy.<br>
+            • Don’t cut fats too low (hormones need them).</p>
+          </div>`,
+        recomp: `
+          <div class="suggestion">
+            <h3>⚖️ Body Recomposition</h3>
+            <p>• Best for beginners, returning lifters, or higher body-fat individuals.<br>
+            • Eat at maintenance or a small deficit (−100 to −200 kcal).<br>
+            • Protein 2.0–2.6 g/kg is ideal.<br>
+            • Progressive overload is non-negotiable.</p>
+          </div>
+          <div class="suggestion">
+            <h3>📈 Expectations</h3>
+            <p>• Scale weight may stay flat or drop slowly while measurements improve.<br>
+            • Take progress photos and strength numbers as main metrics.<br>
+            • Patience is key — recomp is slower than pure cutting or bulking.</p>
+          </div>`,
+        muscle: `
+          <div class="suggestion">
+            <h3>💪 Muscle Building</h3>
+            <p>• Modest surplus (+200–350 kcal) is enough for most people.<br>
+            • Protein 1.6–2.2 g/kg is sufficient in a surplus.<br>
+            • Carbs should be the highest macro to fuel training.<br>
+            • Recover hard: sleep, manage stress, don’t train to failure every set.</p>
+          </div>
+          <div class="suggestion">
+            <h3>🏋️ Training note</h3>
+            <p>• Focus on compound lifts and progressive overload.<br>
+            • Track lifts weekly. If strength is stuck, check sleep and total calories first.</p>
+          </div>`,
+        maintain: `
+          <div class="suggestion">
+            <h3>⚖️ Maintenance</h3>
+            <p>• Eat around your TDEE.<br>
+            • Protein 1.6–2.0 g/kg keeps body composition stable.<br>
+            • Great time to practice consistency and refine food preferences.<br>
+            • You can still improve strength and skill in the gym.</p>
+          </div>`
+      };
+
+      document.getElementById('tipsContent').innerHTML = tips[goal] || tips.maintain;
+    }
+
+    // ========== ACTIONS ==========
+    function addFood() {
+      const name = document.getElementById('foodName').value.trim() || 'Food item';
+      const cal = parseFloat(document.getElementById('foodCal').value) || 0;
+      const pro = parseFloat(document.getElementById('foodPro').value) || 0;
+      const carb = parseFloat(document.getElementById('foodCarb').value) || 0;
+      const fat = parseFloat(document.getElementById('foodFat').value) || 0;
+
+      if (cal === 0 && pro === 0 && carb === 0 && fat === 0) {
+        alert('Please enter at least one value.');
+        return;
+      }
+
+      const key = dateKey();
+      if (!state.logs[key]) state.logs[key] = [];
+      state.logs[key].push({ id: uid(), name, cal, pro, carb, fat });
+
+      // Clear form
+      document.getElementById('foodName').value = '';
+      document.getElementById('foodCal').value = '';
+      document.getElementById('foodPro').value = '';
+      document.getElementById('foodCarb').value = '';
+      document.getElementById('foodFat').value = '';
+
+      save();
+      updateDashboard();
+      // Switch to dashboard to show result
+      switchTab('dashboard');
+    }
+
+    function quickAdd(name, cal, pro, carb, fat) {
+      document.getElementById('foodName').value = name;
+      document.getElementById('foodCal').value = cal;
+      document.getElementById('foodPro').value = pro;
+      document.getElementById('foodCarb').value = carb;
+      document.getElementById('foodFat').value = fat;
+    }
+
+    function removeFood(id) {
+      const key = dateKey();
+      state.logs[key] = (state.logs[key] || []).filter(f => f.id !== id);
+      save();
+      updateDashboard();
+    }
+
+    function changeDate(delta) {
+      state.currentDate.setDate(state.currentDate.getDate() + delta);
+      updateDashboard();
+    }
+
+    function saveProfile() {
+      state.profile.age = parseInt(document.getElementById('age').value) || 30;
+      state.profile.gender = document.getElementById('gender').value;
+      state.profile.weight = parseFloat(document.getElementById('weight').value) || 75;
+      state.profile.height = parseFloat(document.getElementById('height').value) || 175;
+      state.profile.activity = parseFloat(document.getElementById('activity').value) || 1.55;
+
+      calcTargets();
+      save();
+      updateProfileUI();
+      updateDashboard();
+      updateTips();
+      alert('Profile & targets updated!');
+    }
+
+    // ========== TABS ==========
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
+
+      ['dashboard', 'log', 'profile', 'tips'].forEach(id => {
+        document.getElementById('tab-' + id).classList.toggle('hidden', id !== tabId);
+      });
+
+      if (tabId === 'profile') updateProfileUI();
+      if (tabId === 'tips') updateTips();
+      if (tabId === 'dashboard') updateDashboard();
+    }
+
+    // ========== INIT ==========
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+    });
+
+    document.querySelectorAll('.goal-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.goal-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        state.profile.goal = btn.dataset.goal;
+        calcTargets();
+        updateProfileUI();
+        updateTips();
+      });
+    });
+
+    // Load saved data
+    load();
+    calcTargets();
+    updateProfileUI();
+    updateDashboard();
+    updateTips();
+  </script>
+</body>
+</html>
