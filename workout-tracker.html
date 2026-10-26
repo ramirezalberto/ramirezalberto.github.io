@@ -686,36 +686,52 @@ const DEFAULT_EXERCISES = [
   {id:'dbp', name:'Dumbbell Bench Press', muscle:'Chest', equipment:'Dumbbell'},
   {id:'ibp', name:'Incline Barbell Press', muscle:'Chest', equipment:'Barbell'},
   {id:'idbp', name:'Incline Dumbbell Press', muscle:'Chest', equipment:'Dumbbell'},
+  {id:'lowidbp', name:'Low-Incline Dumbbell Press', muscle:'Chest', equipment:'Dumbbell'},
   {id:'dbfly', name:'Dumbbell Flyes', muscle:'Chest', equipment:'Dumbbell'},
-  {id:'crossover', name:'Cable Crossover', muscle:'Chest', equipment:'Cable'},
+  {id:'crossover', name:'Cable Flyes / Crossover', muscle:'Chest', equipment:'Cable'},
   {id:'pushup', name:'Push-Ups', muscle:'Chest', equipment:'Bodyweight'},
+  {id:'scappush', name:'Scapular Push-Ups', muscle:'Chest', equipment:'Bodyweight'},
   {id:'dipchest', name:'Chest Dips', muscle:'Chest', equipment:'Bodyweight'},
   {id:'pecdeck', name:'Pec Deck', muscle:'Chest', equipment:'Machine'},
   // Back
   {id:'dl', name:'Conventional Deadlift', muscle:'Back', equipment:'Barbell'},
   {id:'rdl', name:'Romanian Deadlift', muscle:'Back', equipment:'Barbell'},
+  {id:'srdl', name:'Single-Leg RDL', muscle:'Back', equipment:'Dumbbell'},
   {id:'pu', name:'Pull-Ups', muscle:'Back', equipment:'Bodyweight'},
   {id:'bpull', name:'Barbell Bent-Over Row', muscle:'Back', equipment:'Barbell'},
   {id:'dbrow', name:'One-Arm Dumbbell Row', muscle:'Back', equipment:'Dumbbell'},
+  {id:'csrow', name:'Chest-Supported Row', muscle:'Back', equipment:'Dumbbell'},
   {id:'latpd', name:'Lat Pulldown', muscle:'Back', equipment:'Cable'},
+  {id:'latpdn', name:'Neutral-Grip Lat Pulldown', muscle:'Back', equipment:'Cable'},
   {id:'seatedrow', name:'Seated Cable Row', muscle:'Back', equipment:'Cable'},
   {id:'tbar', name:'T-Bar Row', muscle:'Back', equipment:'Barbell'},
   {id:'facepull', name:'Face Pulls', muscle:'Back', equipment:'Cable'},
   {id:'hyperext', name:'Hyperextensions', muscle:'Back', equipment:'Bodyweight'},
-  // Legs
+  {id:'scapdep', name:'Scapular Depressions (hanging)', muscle:'Back', equipment:'Bodyweight'},
+  // Legs / Glutes
   {id:'squat', name:'Barbell Back Squat', muscle:'Legs', equipment:'Barbell'},
   {id:'fsquat', name:'Front Squat', muscle:'Legs', equipment:'Barbell'},
+  {id:'goblet', name:'Goblet Squat (heels elevated)', muscle:'Legs', equipment:'Dumbbell'},
   {id:'legpress', name:'Leg Press', muscle:'Legs', equipment:'Machine'},
   {id:'lunge', name:'Walking Lunges', muscle:'Legs', equipment:'Dumbbell'},
+  {id:'revlunge', name:'Reverse Lunges', muscle:'Legs', equipment:'Dumbbell'},
+  {id:'bulg', name:'Bulgarian Split Squat', muscle:'Legs', equipment:'Dumbbell'},
   {id:'legext', name:'Leg Extension', muscle:'Legs', equipment:'Machine'},
   {id:'legcurl', name:'Lying Leg Curl', muscle:'Legs', equipment:'Machine'},
+  {id:'seatedcurl', name:'Seated Leg Curl', muscle:'Legs', equipment:'Machine'},
+  {id:'seatedcurlin', name:'Seated Leg Curl (toes in)', muscle:'Legs', equipment:'Machine'},
+  {id:'hipthrust', name:'Hip Thrust', muscle:'Legs', equipment:'Barbell'},
   {id:'rdl_legs', name:'Romanian Deadlift', muscle:'Legs', equipment:'Barbell'},
   {id:'calfraise', name:'Standing Calf Raise', muscle:'Legs', equipment:'Machine'},
+  {id:'calfraiseflex', name:'Calf Raise (soft knees)', muscle:'Legs', equipment:'Machine'},
+  {id:'seatedcalf', name:'Seated Calf Raise', muscle:'Legs', equipment:'Machine'},
   {id:'hack', name:'Hack Squat', muscle:'Legs', equipment:'Machine'},
-  {id:'bulg', name:'Bulgarian Split Squat', muscle:'Legs', equipment:'Dumbbell'},
+  {id:'stepup', name:'Single-Leg Step-Up', muscle:'Legs', equipment:'Dumbbell'},
+  {id:'abductor', name:'Hip Abduction', muscle:'Legs', equipment:'Machine'},
   // Shoulders
   {id:'ohp', name:'Overhead Press', muscle:'Shoulders', equipment:'Barbell'},
   {id:'dbohp', name:'Dumbbell Shoulder Press', muscle:'Shoulders', equipment:'Dumbbell'},
+  {id:'landmine', name:'Landmine Press (unilateral)', muscle:'Shoulders', equipment:'Barbell'},
   {id:'latraise', name:'Lateral Raises', muscle:'Shoulders', equipment:'Dumbbell'},
   {id:'frontraise', name:'Front Raises', muscle:'Shoulders', equipment:'Dumbbell'},
   {id:'rearfly', name:'Rear Delt Flyes', muscle:'Shoulders', equipment:'Dumbbell'},
@@ -724,47 +740,88 @@ const DEFAULT_EXERCISES = [
   // Arms
   {id:'bbcurl', name:'Barbell Curl', muscle:'Arms', equipment:'Barbell'},
   {id:'dbcurl', name:'Dumbbell Curl', muscle:'Arms', equipment:'Dumbbell'},
+  {id:'inclinecurl', name:'Incline Dumbbell Curl', muscle:'Arms', equipment:'Dumbbell'},
   {id:'hamcurl', name:'Hammer Curl', muscle:'Arms', equipment:'Dumbbell'},
   {id:'preacher', name:'Preacher Curl', muscle:'Arms', equipment:'Barbell'},
   {id:'triceppush', name:'Tricep Pushdown', muscle:'Arms', equipment:'Cable'},
+  {id:'ropepush', name:'Rope Pushdowns', muscle:'Arms', equipment:'Cable'},
   {id:'skull', name:'Skull Crushers', muscle:'Arms', equipment:'Barbell'},
   {id:'ohtricep', name:'Overhead Tricep Extension', muscle:'Arms', equipment:'Dumbbell'},
+  {id:'ohcabletri', name:'Overhead Cable Tricep Extension', muscle:'Arms', equipment:'Cable'},
   {id:'closebp', name:'Close-Grip Bench Press', muscle:'Arms', equipment:'Barbell'},
   {id:'diptri', name:'Tricep Dips', muscle:'Arms', equipment:'Bodyweight'},
-  // Core
+  // Core + Activation / Mobility
   {id:'plank', name:'Plank', muscle:'Core', equipment:'Bodyweight'},
   {id:'crunch', name:'Crunches', muscle:'Core', equipment:'Bodyweight'},
   {id:'hlr', name:'Hanging Leg Raises', muscle:'Core', equipment:'Bodyweight'},
+  {id:'hkr', name:'Hanging Knee Raises', muscle:'Core', equipment:'Bodyweight'},
+  {id:'deadbug', name:'Dead Bug', muscle:'Core', equipment:'Bodyweight'},
   {id:'cablecrunch', name:'Cable Crunch', muscle:'Core', equipment:'Cable'},
   {id:'abwheel', name:'Ab Wheel Rollout', muscle:'Core', equipment:'Bodyweight'},
   {id:'russian', name:'Russian Twists', muscle:'Core', equipment:'Bodyweight'},
+  {id:'toeyoga', name:'Toe Yoga', muscle:'Core', equipment:'Bodyweight'},
+  {id:'glutebridge', name:'Glute Bridge (posterior tilt)', muscle:'Core', equipment:'Bodyweight'},
+  {id:'chintuck', name:'Chin Tucks', muscle:'Core', equipment:'Bodyweight'},
+  {id:'shortfoot', name:'Short Foot Exercise', muscle:'Core', equipment:'Bodyweight'},
 ];
 
 const DEFAULT_ROUTINES = [
   {
-    id: 'push-a',
-    name: 'Push Day A',
-    exercises: ['bp','ohp','idbp','latraise','triceppush','ohtricep']
+    id: 'full-a',
+    name: 'Full Body A — Focus Back',
+    exercises: [
+      'scappush',      // activation: scapular push-ups
+      'csrow',         // Chest-Supported Row 3×8-10
+      'latpdn',        // Neutral-Grip Lat Pulldown 3×8-12
+      'facepull',      // Face Pulls 3×12-15
+      'idbp',          // Incline DB Press 3×8-10
+      'inclinecurl',   // Incline DB Curl 3×10-12
+      'hamcurl',       // Hammer Curl 3×10-12
+      'chintuck'       // Chin Tucks (stabilizers)
+    ]
   },
   {
-    id: 'pull-a',
-    name: 'Pull Day A',
-    exercises: ['dl','pu','bpull','latpd','facepull','bbcurl']
+    id: 'full-b',
+    name: 'Full Body B — Focus Pecs',
+    exercises: [
+      'chintuck',      // activation: Chin Tucks
+      'scapdep',       // Scapular Depressions
+      'lowidbp',       // Low-Incline DB Press 3×8-10
+      'landmine',      // Landmine Press Unilateral 3×8/side
+      'crossover',     // Cable Flyes 2×12-15
+      'latraise',      // Lateral Raises 3×12-15
+      'ohcabletri',    // Overhead Cable Tricep Ext 3×10-12
+      'ropepush'       // Rope Pushdowns 3×12
+    ]
   },
   {
-    id: 'legs-a',
-    name: 'Legs Day A',
-    exercises: ['squat','rdl','legpress','legext','legcurl','calfraise']
+    id: 'lower-a',
+    name: 'Lower Body A — Quads + Calves + Traps',
+    exercises: [
+      'shortfoot',     // activation: Short Foot
+      'goblet',        // Goblet Squat (heels elevated) 3×8-10
+      'legpress',      // Leg Press 3×10-12
+      'bulg',          // Bulgarian Split Squat 3×8/leg
+      'seatedcurl',    // Seated Leg Curl 3×10-12
+      'seatedcalf',    // Seated Calf Raise 3×12-15
+      'hkr',           // Hanging Knee Raises 3×max
+      'facepull'       // Mid/Lower Traps (Face Pulls)
+    ]
   },
   {
-    id: 'upper',
-    name: 'Upper Body',
-    exercises: ['bp','bpull','ohp','latpd','dbcurl','triceppush']
-  },
-  {
-    id: 'full',
-    name: 'Full Body Strength',
-    exercises: ['squat','bp','dl','ohp','pu','plank']
+    id: 'lower-b',
+    name: 'Lower Body B — Hamstrings + Glutes + Calves',
+    exercises: [
+      'toeyoga',       // activation: Toe Yoga
+      'glutebridge',   // Glute Bridge posterior tilt
+      'srdl',          // Single-Leg RDL 3×6-8
+      'hipthrust',     // Hip Thrust 3×8-10 (2s hold)
+      'legcurl',       // Lying Leg Curl 3×10-12
+      'seatedcurlin',  // Seated Leg Curl toes-in
+      'revlunge',      // Reverse Lunges 2×8/side
+      'calfraiseflex', // Calf Raise soft knees 3×12-15
+      'deadbug'        // Dead Bug 3×10/side
+    ]
   }
 ];
 
