@@ -396,6 +396,7 @@
     <div class="tabs">
       <div class="tab active" data-tab="dashboard">Dashboard</div>
       <div class="tab" data-tab="log">Log Food</div>
+      <div class="tab" data-tab="progress">Progress</div>
       <div class="tab" data-tab="profile">Profile</div>
       <div class="tab" data-tab="tips">Tips</div>
     </div>
@@ -507,14 +508,39 @@
         <div class="section-title">Proteins</div>
         <div class="grid-2" style="gap:8px; margin-bottom:14px;" id="quickProteins"></div>
 
-        <div class="section-title">Carbs & Grains</div>
+        <div class="section-title">Carbs, Roots & Local</div>
         <div class="grid-2" style="gap:8px; margin-bottom:14px;" id="quickCarbs"></div>
 
-        <div class="section-title">Fats & Others</div>
+        <div class="section-title">Fruits</div>
+        <div class="grid-2" style="gap:8px; margin-bottom:14px;" id="quickFruits"></div>
+
+        <div class="section-title">Vegetables</div>
+        <div class="grid-2" style="gap:8px; margin-bottom:14px;" id="quickVeggies"></div>
+
+        <div class="section-title">Fats & Seeds</div>
         <div class="grid-2" style="gap:8px; margin-bottom:14px;" id="quickFats"></div>
 
         <div class="section-title">Dairy & Snacks</div>
         <div class="grid-2" style="gap:8px;" id="quickDairy"></div>
+      </div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div id="tab-progress" class="hidden">
+      <div class="card">
+        <h2><span>📈</span> Last 7 Days Overview</h2>
+        <div id="weekSummary" style="margin-bottom:16px; font-size:0.95rem; line-height:1.6;"></div>
+        <div id="weekBars"></div>
+      </div>
+
+      <div class="card">
+        <h2><span>🔥</span> Consistency</h2>
+        <div id="consistencyStats"></div>
+      </div>
+
+      <div class="card">
+        <h2><span>💡</span> Insights</h2>
+        <div id="progressInsights"></div>
       </div>
     </div>
 
@@ -946,7 +972,7 @@
     }
 
     // ========== FOOD DATABASE ==========
-    // Base values: either per 100g or per unit
+    // Accurate base values (USDA / reliable sources). unit = g / ml / unit / scoop / bar / slice
     const FOOD_DB = {
       proteins: [
         { id: 'chicken', name: 'Chicken breast', unit: 'g', baseQty: 100, cal: 165, pro: 31, carb: 0, fat: 3.6 },
@@ -954,11 +980,14 @@
         { id: 'salmon', name: 'Salmon', unit: 'g', baseQty: 100, cal: 208, pro: 20, carb: 0, fat: 13 },
         { id: 'tuna', name: 'Tuna (canned in water)', unit: 'g', baseQty: 100, cal: 116, pro: 26, carb: 0, fat: 1 },
         { id: 'beef', name: 'Lean beef (sirloin)', unit: 'g', baseQty: 100, cal: 200, pro: 27, carb: 0, fat: 10 },
+        { id: 'chickensausage', name: 'Chicken sausage', unit: 'g', baseQty: 100, cal: 190, pro: 19, carb: 1.5, fat: 12 },
+        { id: 'porksausage', name: 'Pork sausage', unit: 'g', baseQty: 100, cal: 325, pro: 18, carb: 1.5, fat: 27 },
         { id: 'egg', name: 'Egg (whole)', unit: 'unit', baseQty: 1, cal: 72, pro: 6.3, carb: 0.4, fat: 4.8 },
         { id: 'eggwhite', name: 'Egg white', unit: 'unit', baseQty: 1, cal: 17, pro: 3.6, carb: 0.2, fat: 0.1 },
         { id: 'shrimp', name: 'Shrimp', unit: 'g', baseQty: 100, cal: 99, pro: 24, carb: 0.2, fat: 0.3 },
         { id: 'tofu', name: 'Tofu (firm)', unit: 'g', baseQty: 100, cal: 144, pro: 17, carb: 3, fat: 9 },
         { id: 'whey', name: 'Whey protein', unit: 'scoop', baseQty: 1, cal: 120, pro: 24, carb: 3, fat: 1.5 },
+        { id: 'proteinbar', name: 'Protein bar (avg)', unit: 'bar', baseQty: 1, cal: 210, pro: 20, carb: 22, fat: 7 },
       ],
       carbs: [
         { id: 'rice', name: 'White rice (cooked)', unit: 'g', baseQty: 100, cal: 130, pro: 2.7, carb: 28, fat: 0.3 },
@@ -967,10 +996,33 @@
         { id: 'potato', name: 'Potato (boiled)', unit: 'g', baseQty: 100, cal: 87, pro: 1.9, carb: 20, fat: 0.1 },
         { id: 'sweetpotato', name: 'Sweet potato', unit: 'g', baseQty: 100, cal: 86, pro: 1.6, carb: 20, fat: 0.1 },
         { id: 'pasta', name: 'Pasta (cooked)', unit: 'g', baseQty: 100, cal: 131, pro: 5, carb: 25, fat: 1.1 },
+        { id: 'quinoa', name: 'Quinoa (cooked)', unit: 'g', baseQty: 100, cal: 120, pro: 4.4, carb: 21, fat: 1.9 },
+        { id: 'guineoverde', name: 'Guineo verde (green plantain)', unit: 'g', baseQty: 100, cal: 122, pro: 1.3, carb: 32, fat: 0.4 },
+        { id: 'yautia', name: 'Yautía (malanga)', unit: 'g', baseQty: 100, cal: 98, pro: 1.5, carb: 23.6, fat: 0.4 },
+        { id: 'mangu', name: 'Mangú (mashed plantain)', unit: 'g', baseQty: 100, cal: 135, pro: 1.4, carb: 34, fat: 0.5 },
+        { id: 'ricecake', name: 'Rice cake', unit: 'unit', baseQty: 1, cal: 35, pro: 0.7, carb: 7.3, fat: 0.3 },
+        { id: 'casabe', name: 'Casabe (cassava bread)', unit: 'g', baseQty: 100, cal: 300, pro: 2.5, carb: 71, fat: 0.5 },
+        { id: 'centeno', name: 'Centeno / Rye cookie', unit: 'unit', baseQty: 1, cal: 45, pro: 0.8, carb: 8, fat: 1.2 },
+        { id: 'cluster', name: 'Cluster Dextrin', unit: 'scoop', baseQty: 1, cal: 97, pro: 0, carb: 24.3, fat: 0 },
         { id: 'bread', name: 'Bread (slice)', unit: 'slice', baseQty: 1, cal: 80, pro: 3, carb: 15, fat: 1 },
+      ],
+      fruits: [
         { id: 'banana', name: 'Banana', unit: 'unit', baseQty: 1, cal: 105, pro: 1.3, carb: 27, fat: 0.4 },
         { id: 'apple', name: 'Apple', unit: 'unit', baseQty: 1, cal: 95, pro: 0.5, carb: 25, fat: 0.3 },
-        { id: 'quinoa', name: 'Quinoa (cooked)', unit: 'g', baseQty: 100, cal: 120, pro: 4.4, carb: 21, fat: 1.9 },
+        { id: 'orange', name: 'Orange', unit: 'unit', baseQty: 1, cal: 62, pro: 1.2, carb: 15.4, fat: 0.2 },
+        { id: 'berries', name: 'Mixed berries', unit: 'g', baseQty: 100, cal: 45, pro: 0.8, carb: 11, fat: 0.3 },
+        { id: 'mango', name: 'Mango', unit: 'g', baseQty: 100, cal: 60, pro: 0.8, carb: 15, fat: 0.4 },
+        { id: 'papaya', name: 'Papaya', unit: 'g', baseQty: 100, cal: 43, pro: 0.5, carb: 11, fat: 0.3 },
+      ],
+      veggies: [
+        { id: 'spinach', name: 'Spinach (raw)', unit: 'g', baseQty: 100, cal: 23, pro: 2.9, carb: 3.6, fat: 0.4 },
+        { id: 'broccoli', name: 'Broccoli', unit: 'g', baseQty: 100, cal: 34, pro: 2.8, carb: 7, fat: 0.4 },
+        { id: 'bellpepper', name: 'Bell pepper', unit: 'g', baseQty: 100, cal: 26, pro: 1, carb: 6, fat: 0.3 },
+        { id: 'tomato', name: 'Tomato', unit: 'g', baseQty: 100, cal: 18, pro: 0.9, carb: 3.9, fat: 0.2 },
+        { id: 'cucumber', name: 'Cucumber', unit: 'g', baseQty: 100, cal: 15, pro: 0.7, carb: 3.6, fat: 0.1 },
+        { id: 'lettuce', name: 'Lettuce', unit: 'g', baseQty: 100, cal: 15, pro: 1.4, carb: 2.9, fat: 0.2 },
+        { id: 'onion', name: 'Onion', unit: 'g', baseQty: 100, cal: 40, pro: 1.1, carb: 9.3, fat: 0.1 },
+        { id: 'carrot', name: 'Carrot', unit: 'g', baseQty: 100, cal: 41, pro: 0.9, carb: 10, fat: 0.2 },
       ],
       fats: [
         { id: 'avocado', name: 'Avocado', unit: 'g', baseQty: 100, cal: 160, pro: 2, carb: 8.5, fat: 15 },
@@ -994,14 +1046,13 @@
 
     function renderQuickAdds() {
       const makeBtn = (food) => {
-        const label = food.unit === 'g' || food.unit === 'ml'
-          ? `${food.name}`
-          : food.name;
-        return `<button class="btn btn-secondary btn-sm" onclick="selectFood('${food.id}')">${label}</button>`;
+        return `<button class="btn btn-secondary btn-sm" onclick="selectFood('${food.id}')">${food.name}</button>`;
       };
 
       document.getElementById('quickProteins').innerHTML = FOOD_DB.proteins.map(makeBtn).join('');
       document.getElementById('quickCarbs').innerHTML = FOOD_DB.carbs.map(makeBtn).join('');
+      document.getElementById('quickFruits').innerHTML = FOOD_DB.fruits.map(makeBtn).join('');
+      document.getElementById('quickVeggies').innerHTML = FOOD_DB.veggies.map(makeBtn).join('');
       document.getElementById('quickFats').innerHTML = FOOD_DB.fats.map(makeBtn).join('');
       document.getElementById('quickDairy').innerHTML = FOOD_DB.dairy.map(makeBtn).join('');
     }
@@ -1023,14 +1074,23 @@
       // Show quantity section
       document.getElementById('quantitySection').style.display = 'block';
 
-      // Set default quantity
+      // Set default quantity (realistic portions)
       let defaultQty = food.baseQty;
-      if (food.unit === 'g') defaultQty = 150;          // common portion
+      if (food.unit === 'g') defaultQty = 150;
       if (food.unit === 'ml') defaultQty = 200;
       if (food.id === 'oats') defaultQty = 50;
-      if (food.id === 'almonds' || food.id === 'walnut') defaultQty = 30;
+      if (food.id === 'almonds' || food.id === 'walnut' || food.id === 'chia') defaultQty = 30;
       if (food.id === 'peanutbutter') defaultQty = 20;
       if (food.id === 'oliveoil') defaultQty = 15;
+      if (food.id === 'spinach' || food.id === 'lettuce') defaultQty = 80;
+      if (food.id === 'broccoli' || food.id === 'bellpepper') defaultQty = 120;
+      if (food.id === 'berries') defaultQty = 120;
+      if (food.id === 'guineoverde' || food.id === 'yautia' || food.id === 'mangu') defaultQty = 200;
+      if (food.id === 'casabe') defaultQty = 40;
+      if (food.id === 'cluster') defaultQty = 1;
+      if (food.id === 'ricecake') defaultQty = 2;
+      if (food.id === 'centeno') defaultQty = 2;
+      if (food.id === 'proteinbar') defaultQty = 1;
 
       document.getElementById('foodQty').value = defaultQty;
       document.getElementById('unitLabel').textContent = `(${food.unit})`;
@@ -1131,18 +1191,130 @@
       alert('Profile & targets updated!');
     }
 
+    // ========== PROGRESS VISUALIZATION ==========
+    function getDayTotals(dateObj) {
+      const key = dateObj.toISOString().slice(0, 10);
+      const foods = state.logs[key] || [];
+      return foods.reduce((acc, f) => {
+        acc.cal += f.cal || 0;
+        acc.pro += f.pro || 0;
+        acc.carb += f.carb || 0;
+        acc.fat += f.fat || 0;
+        return acc;
+      }, { cal: 0, pro: 0, carb: 0, fat: 0 });
+    }
+
+    function updateProgress() {
+      const days = [];
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      for (let i = 6; i >= 0; i--) {
+        const d = new Date(today);
+        d.setDate(d.getDate() - i);
+        const totals = getDayTotals(d);
+        days.push({
+          date: d,
+          label: i === 0 ? 'Today' : d.toLocaleDateString(undefined, { weekday: 'short' }),
+          ...totals,
+          hasData: totals.cal > 0
+        });
+      }
+
+      // Summary
+      const daysWithData = days.filter(d => d.hasData);
+      const avgCal = daysWithData.length ? Math.round(daysWithData.reduce((s,d) => s + d.cal, 0) / daysWithData.length) : 0;
+      const avgPro = daysWithData.length ? Math.round(daysWithData.reduce((s,d) => s + d.pro, 0) / daysWithData.length) : 0;
+      const target = state.targets.cal;
+
+      document.getElementById('weekSummary').innerHTML = `
+        <div>Days logged: <strong>${daysWithData.length}/7</strong></div>
+        <div>Avg calories: <strong>${avgCal || '—'}</strong> kcal (target ${target})</div>
+        <div>Avg protein: <strong>${avgPro || '—'}g</strong> (target ${state.targets.pro}g)</div>
+      `;
+
+      // Bars
+      const maxCal = Math.max(target * 1.2, ...days.map(d => d.cal), 1);
+      document.getElementById('weekBars').innerHTML = days.map(d => {
+        const pct = Math.min(100, (d.cal / maxCal) * 100);
+        const proPct = state.targets.pro ? Math.min(100, (d.pro / state.targets.pro) * 100) : 0;
+        const color = d.cal === 0 ? 'var(--border)' :
+                      d.cal > target * 1.1 ? 'var(--danger)' :
+                      d.cal < target * 0.85 ? 'var(--warning)' : 'var(--success)';
+        return `
+          <div style="margin-bottom:12px;">
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; margin-bottom:4px;">
+              <span>${d.label}</span>
+              <span style="color:var(--muted)">${d.hasData ? Math.round(d.cal) + ' kcal • ' + Math.round(d.pro) + 'p' : 'No data'}</span>
+            </div>
+            <div style="height:10px; background:var(--border); border-radius:5px; overflow:hidden;">
+              <div style="height:100%; width:${pct}%; background:${color}; border-radius:5px; transition:width 0.3s;"></div>
+            </div>
+            <div style="height:4px; background:var(--border); border-radius:2px; margin-top:3px; overflow:hidden;">
+              <div style="height:100%; width:${proPct}%; background:var(--protein); border-radius:2px;"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Consistency
+      const proDays = daysWithData.filter(d => d.pro >= state.targets.pro * 0.9).length;
+      document.getElementById('consistencyStats').innerHTML = `
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="macro-box">
+            <div class="label">Days Logged</div>
+            <div class="value">${daysWithData.length}</div>
+            <div class="target">out of 7</div>
+          </div>
+          <div class="macro-box">
+            <div class="label">Protein Hit</div>
+            <div class="value">${proDays}</div>
+            <div class="target">days ≥90% target</div>
+          </div>
+        </div>
+      `;
+
+      // Insights
+      let insights = [];
+      if (daysWithData.length < 3) {
+        insights.push({ icon: '📝', title: 'Start logging', text: 'Log at least a few days so we can show meaningful trends.' });
+      } else {
+        if (avgCal > target * 1.1) {
+          insights.push({ icon: '⚠️', title: 'Calories a bit high', text: `Your 7-day average (${avgCal} kcal) is above target. Slight reductions in portions or snacks can help.` });
+        } else if (avgCal < target * 0.85 && avgCal > 0) {
+          insights.push({ icon: '📉', title: 'Under target', text: `Average intake is lower than needed. Make sure you're fueling training and recovery.` });
+        } else {
+          insights.push({ icon: '✅', title: 'Calories on track', text: 'Your recent average is close to your target. Nice consistency!' });
+        }
+
+        if (avgPro < state.targets.pro * 0.85) {
+          insights.push({ icon: '🥩', title: 'Protein needs attention', text: `Average protein is ${avgPro}g. Try adding more chicken, eggs, Greek yogurt or whey.` });
+        } else {
+          insights.push({ icon: '💪', title: 'Protein looking good', text: `You're averaging ${avgPro}g protein — solid for your goal.` });
+        }
+      }
+
+      document.getElementById('progressInsights').innerHTML = insights.map(s => `
+        <div class="suggestion">
+          <h3>${s.icon} ${s.title}</h3>
+          <p>${s.text}</p>
+        </div>
+      `).join('');
+    }
+
     // ========== TABS ==========
     function switchTab(tabId) {
       document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
       document.querySelector(`.tab[data-tab="${tabId}"]`).classList.add('active');
 
-      ['dashboard', 'log', 'profile', 'tips'].forEach(id => {
+      ['dashboard', 'log', 'progress', 'profile', 'tips'].forEach(id => {
         document.getElementById('tab-' + id).classList.toggle('hidden', id !== tabId);
       });
 
       if (tabId === 'profile') updateProfileUI();
       if (tabId === 'tips') updateTips();
       if (tabId === 'dashboard') updateDashboard();
+      if (tabId === 'progress') updateProgress();
     }
 
     // ========== INIT ==========
