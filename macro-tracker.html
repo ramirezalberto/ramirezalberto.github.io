@@ -460,10 +460,23 @@
     <div id="tab-log" class="hidden">
       <div class="card">
         <h2><span>➕</span> Add Food</h2>
+
         <div class="form-row">
           <label>Food name</label>
           <input type="text" id="foodName" placeholder="e.g. Chicken breast, rice, avocado..." />
         </div>
+
+        <!-- Quantity selector (appears when using Quick Add) -->
+        <div id="quantitySection" class="form-row" style="display:none;">
+          <label>Quantity <span id="unitLabel" style="color:var(--muted); font-weight:400;"></span></label>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <button class="btn btn-secondary btn-sm" style="width:44px; padding:10px;" onclick="adjustQty(-1)">−</button>
+            <input type="number" id="foodQty" value="100" min="1" step="1" style="text-align:center; font-weight:600;" oninput="recalcFromQty()" />
+            <button class="btn btn-secondary btn-sm" style="width:44px; padding:10px;" onclick="adjustQty(1)">+</button>
+          </div>
+          <div style="font-size:0.8rem; color:var(--muted); margin-top:6px;" id="baseInfo"></div>
+        </div>
+
         <div class="grid-2">
           <div class="form-row">
             <label>Calories</label>
@@ -489,16 +502,19 @@
 
       <div class="card">
         <h2><span>⚡</span> Quick Add</h2>
-        <div class="grid-2" style="gap:10px;">
-          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Chicken breast 150g', 248, 46, 0, 5.4)">Chicken 150g</button>
-          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Rice cooked 200g', 260, 5.4, 56, 0.6)">Rice 200g</button>
-          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Egg (whole)', 72, 6.3, 0.4, 4.8)">Egg</button>
-          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Greek yogurt 150g', 89, 15, 5.5, 0.6)">Greek Yogurt</button>
-          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Banana medium', 105, 1.3, 27, 0.4)">Banana</button>
-          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Avocado 100g', 160, 2, 8.5, 15)">Avocado</button>
-          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Oats 50g dry', 190, 6.5, 34, 3.5)">Oats 50g</button>
-          <button class="btn btn-secondary btn-sm" onclick="quickAdd('Whey scoop', 120, 24, 3, 1.5)">Whey Scoop</button>
-        </div>
+        <p style="font-size:0.85rem; color:var(--muted); margin-bottom:14px;">Tap a food → adjust quantity → macros calculate automatically</p>
+
+        <div class="section-title">Proteins</div>
+        <div class="grid-2" style="gap:8px; margin-bottom:14px;" id="quickProteins"></div>
+
+        <div class="section-title">Carbs & Grains</div>
+        <div class="grid-2" style="gap:8px; margin-bottom:14px;" id="quickCarbs"></div>
+
+        <div class="section-title">Fats & Others</div>
+        <div class="grid-2" style="gap:8px; margin-bottom:14px;" id="quickFats"></div>
+
+        <div class="section-title">Dairy & Snacks</div>
+        <div class="grid-2" style="gap:8px;" id="quickDairy"></div>
       </div>
     </div>
 
@@ -929,6 +945,134 @@
       document.getElementById('tipsContent').innerHTML = tips[goal] || tips.maintain;
     }
 
+    // ========== FOOD DATABASE ==========
+    // Base values: either per 100g or per unit
+    const FOOD_DB = {
+      proteins: [
+        { id: 'chicken', name: 'Chicken breast', unit: 'g', baseQty: 100, cal: 165, pro: 31, carb: 0, fat: 3.6 },
+        { id: 'turkey', name: 'Turkey breast', unit: 'g', baseQty: 100, cal: 135, pro: 30, carb: 0, fat: 1 },
+        { id: 'salmon', name: 'Salmon', unit: 'g', baseQty: 100, cal: 208, pro: 20, carb: 0, fat: 13 },
+        { id: 'tuna', name: 'Tuna (canned in water)', unit: 'g', baseQty: 100, cal: 116, pro: 26, carb: 0, fat: 1 },
+        { id: 'beef', name: 'Lean beef (sirloin)', unit: 'g', baseQty: 100, cal: 200, pro: 27, carb: 0, fat: 10 },
+        { id: 'egg', name: 'Egg (whole)', unit: 'unit', baseQty: 1, cal: 72, pro: 6.3, carb: 0.4, fat: 4.8 },
+        { id: 'eggwhite', name: 'Egg white', unit: 'unit', baseQty: 1, cal: 17, pro: 3.6, carb: 0.2, fat: 0.1 },
+        { id: 'shrimp', name: 'Shrimp', unit: 'g', baseQty: 100, cal: 99, pro: 24, carb: 0.2, fat: 0.3 },
+        { id: 'tofu', name: 'Tofu (firm)', unit: 'g', baseQty: 100, cal: 144, pro: 17, carb: 3, fat: 9 },
+        { id: 'whey', name: 'Whey protein', unit: 'scoop', baseQty: 1, cal: 120, pro: 24, carb: 3, fat: 1.5 },
+      ],
+      carbs: [
+        { id: 'rice', name: 'White rice (cooked)', unit: 'g', baseQty: 100, cal: 130, pro: 2.7, carb: 28, fat: 0.3 },
+        { id: 'brownrice', name: 'Brown rice (cooked)', unit: 'g', baseQty: 100, cal: 112, pro: 2.6, carb: 24, fat: 0.9 },
+        { id: 'oats', name: 'Oats (dry)', unit: 'g', baseQty: 100, cal: 389, pro: 17, carb: 66, fat: 7 },
+        { id: 'potato', name: 'Potato (boiled)', unit: 'g', baseQty: 100, cal: 87, pro: 1.9, carb: 20, fat: 0.1 },
+        { id: 'sweetpotato', name: 'Sweet potato', unit: 'g', baseQty: 100, cal: 86, pro: 1.6, carb: 20, fat: 0.1 },
+        { id: 'pasta', name: 'Pasta (cooked)', unit: 'g', baseQty: 100, cal: 131, pro: 5, carb: 25, fat: 1.1 },
+        { id: 'bread', name: 'Bread (slice)', unit: 'slice', baseQty: 1, cal: 80, pro: 3, carb: 15, fat: 1 },
+        { id: 'banana', name: 'Banana', unit: 'unit', baseQty: 1, cal: 105, pro: 1.3, carb: 27, fat: 0.4 },
+        { id: 'apple', name: 'Apple', unit: 'unit', baseQty: 1, cal: 95, pro: 0.5, carb: 25, fat: 0.3 },
+        { id: 'quinoa', name: 'Quinoa (cooked)', unit: 'g', baseQty: 100, cal: 120, pro: 4.4, carb: 21, fat: 1.9 },
+      ],
+      fats: [
+        { id: 'avocado', name: 'Avocado', unit: 'g', baseQty: 100, cal: 160, pro: 2, carb: 8.5, fat: 15 },
+        { id: 'almonds', name: 'Almonds', unit: 'g', baseQty: 100, cal: 579, pro: 21, carb: 22, fat: 50 },
+        { id: 'peanutbutter', name: 'Peanut butter', unit: 'g', baseQty: 100, cal: 588, pro: 25, carb: 20, fat: 50 },
+        { id: 'oliveoil', name: 'Olive oil', unit: 'ml', baseQty: 15, cal: 119, pro: 0, carb: 0, fat: 13.5 },
+        { id: 'walnut', name: 'Walnuts', unit: 'g', baseQty: 100, cal: 654, pro: 15, carb: 14, fat: 65 },
+        { id: 'chia', name: 'Chia seeds', unit: 'g', baseQty: 100, cal: 486, pro: 17, carb: 42, fat: 31 },
+      ],
+      dairy: [
+        { id: 'greekyogurt', name: 'Greek yogurt (0%)', unit: 'g', baseQty: 100, cal: 59, pro: 10, carb: 3.6, fat: 0.4 },
+        { id: 'cottage', name: 'Cottage cheese', unit: 'g', baseQty: 100, cal: 98, pro: 11, carb: 3.4, fat: 4.3 },
+        { id: 'milk', name: 'Milk (whole)', unit: 'ml', baseQty: 100, cal: 61, pro: 3.2, carb: 4.8, fat: 3.3 },
+        { id: 'cheddar', name: 'Cheddar cheese', unit: 'g', baseQty: 100, cal: 403, pro: 25, carb: 1.3, fat: 33 },
+        { id: 'skyr', name: 'Skyr / Icelandic yogurt', unit: 'g', baseQty: 100, cal: 63, pro: 11, carb: 4, fat: 0.2 },
+      ]
+    };
+
+    // Currently selected food for quantity calculation
+    let currentFoodBase = null;
+
+    function renderQuickAdds() {
+      const makeBtn = (food) => {
+        const label = food.unit === 'g' || food.unit === 'ml'
+          ? `${food.name}`
+          : food.name;
+        return `<button class="btn btn-secondary btn-sm" onclick="selectFood('${food.id}')">${label}</button>`;
+      };
+
+      document.getElementById('quickProteins').innerHTML = FOOD_DB.proteins.map(makeBtn).join('');
+      document.getElementById('quickCarbs').innerHTML = FOOD_DB.carbs.map(makeBtn).join('');
+      document.getElementById('quickFats').innerHTML = FOOD_DB.fats.map(makeBtn).join('');
+      document.getElementById('quickDairy').innerHTML = FOOD_DB.dairy.map(makeBtn).join('');
+    }
+
+    function findFood(id) {
+      for (const cat of Object.values(FOOD_DB)) {
+        const found = cat.find(f => f.id === id);
+        if (found) return found;
+      }
+      return null;
+    }
+
+    function selectFood(id) {
+      const food = findFood(id);
+      if (!food) return;
+
+      currentFoodBase = food;
+
+      // Show quantity section
+      document.getElementById('quantitySection').style.display = 'block';
+
+      // Set default quantity
+      let defaultQty = food.baseQty;
+      if (food.unit === 'g') defaultQty = 150;          // common portion
+      if (food.unit === 'ml') defaultQty = 200;
+      if (food.id === 'oats') defaultQty = 50;
+      if (food.id === 'almonds' || food.id === 'walnut') defaultQty = 30;
+      if (food.id === 'peanutbutter') defaultQty = 20;
+      if (food.id === 'oliveoil') defaultQty = 15;
+
+      document.getElementById('foodQty').value = defaultQty;
+      document.getElementById('unitLabel').textContent = `(${food.unit})`;
+      document.getElementById('baseInfo').textContent =
+        `Base: ${food.cal} kcal / ${food.pro}p / ${food.carb}c / ${food.fat}f per ${food.baseQty}${food.unit}`;
+
+      // Set name and calculate
+      document.getElementById('foodName').value = food.name;
+      recalcFromQty();
+    }
+
+    function adjustQty(delta) {
+      const input = document.getElementById('foodQty');
+      let val = parseFloat(input.value) || 0;
+      const step = (currentFoodBase && (currentFoodBase.unit === 'unit' || currentFoodBase.unit === 'scoop' || currentFoodBase.unit === 'slice'))
+        ? 1 : 10;
+      val = Math.max(1, val + delta * step);
+      input.value = val;
+      recalcFromQty();
+    }
+
+    function recalcFromQty() {
+      if (!currentFoodBase) return;
+
+      const qty = parseFloat(document.getElementById('foodQty').value) || 0;
+      const ratio = qty / currentFoodBase.baseQty;
+
+      const cal = Math.round(currentFoodBase.cal * ratio);
+      const pro = Math.round(currentFoodBase.pro * ratio * 10) / 10;
+      const carb = Math.round(currentFoodBase.carb * ratio * 10) / 10;
+      const fat = Math.round(currentFoodBase.fat * ratio * 10) / 10;
+
+      document.getElementById('foodCal').value = cal;
+      document.getElementById('foodPro').value = pro;
+      document.getElementById('foodCarb').value = carb;
+      document.getElementById('foodFat').value = fat;
+
+      // Update name with quantity for clarity
+      const unit = currentFoodBase.unit;
+      document.getElementById('foodName').value = `${currentFoodBase.name} (${qty}${unit})`;
+    }
+
     // ========== ACTIONS ==========
     function addFood() {
       const name = document.getElementById('foodName').value.trim() || 'Food item';
@@ -952,19 +1096,12 @@
       document.getElementById('foodPro').value = '';
       document.getElementById('foodCarb').value = '';
       document.getElementById('foodFat').value = '';
+      document.getElementById('quantitySection').style.display = 'none';
+      currentFoodBase = null;
 
       save();
       updateDashboard();
-      // Switch to dashboard to show result
       switchTab('dashboard');
-    }
-
-    function quickAdd(name, cal, pro, carb, fat) {
-      document.getElementById('foodName').value = name;
-      document.getElementById('foodCal').value = cal;
-      document.getElementById('foodPro').value = pro;
-      document.getElementById('foodCarb').value = carb;
-      document.getElementById('foodFat').value = fat;
     }
 
     function removeFood(id) {
@@ -1030,6 +1167,7 @@
     updateProfileUI();
     updateDashboard();
     updateTips();
+    renderQuickAdds();
   </script>
 </body>
 </html>
